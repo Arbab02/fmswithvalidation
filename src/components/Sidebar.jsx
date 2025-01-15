@@ -44,11 +44,11 @@ const Sidebar = () => {
             </li>
             </Link>
 
-            <Link href='/'> <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
+{/*             <Link href='/'> <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
               <FaChartLine className="mr-3 text-xl" />
               {!isCollapsed && <span className="text-lg">Analytics</span>}
             </li>
- </Link>
+ </Link> */}
             <Link href='/FinanceForm'> <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
               <MdAddChart className="mr-3 text-xl" />
               {!isCollapsed && <span className="text-lg">Add Data</span>}
@@ -60,11 +60,11 @@ const Sidebar = () => {
             </li>
  </Link>
 
-            <Link href='/deals'>   <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
+{/*             <Link href='/deals'>   <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
               <FaHandshake className="mr-3 text-xl" />
               {!isCollapsed && <span className="text-lg">Deals</span>}
             </li>
-            </Link>
+            </Link> */}
 
 
 
@@ -74,11 +74,11 @@ const Sidebar = () => {
             </li>
             </Link> 
 
-            <Link href='/'> <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
+{/*             <Link href='/'> <li className="flex items-center p-3 hover:bg-gray-700 rounded-md cursor-pointer">
               <FaSignOutAlt className="mr-3 text-xl" />
               {!isCollapsed && <span className="text-lg">Logout</span>}
             </li>
-            </Link> 
+            </Link>  */}
           </ul>
         </nav>
       </div>
