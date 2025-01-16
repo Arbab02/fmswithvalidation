@@ -24,7 +24,7 @@ const formatNumber = (value) => {
 };
 
 export default function FinanceDashboard() {
-   const currentYear = new Date().getFullYear()
+   const currentYear = new Date().getFullYear().toString()
   const [metrics, setMetrics] = useState([]);
   const [searchYear, setSearchYear] = useState([currentYear]);
   const [filteredMetrics, setFilteredMetrics] = useState([]);
