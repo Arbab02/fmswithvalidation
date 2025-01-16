@@ -9,7 +9,6 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const RADAR_COLORS = ['#8884d8', '#82ca9d'];
 
@@ -26,6 +25,8 @@ const formatNumber = (value) => {
 
 export default function FinanceDashboard() {
   const [metrics, setMetrics] = useState([]);
+  const [searchYear, setSearchYear] = useState('');
+  const [filteredMetrics, setFilteredMetrics] = useState([]);
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -35,6 +36,17 @@ export default function FinanceDashboard() {
     };
     fetchMetrics();
   }, []);
+
+  useEffect(() => {
+    if (searchYear.trim() === '') {
+      setFilteredMetrics(metrics);
+    } else {
+      const filtered = metrics.filter((metric) => 
+        metric.year.toString().includes(searchYear.trim())
+      );
+      setFilteredMetrics(filtered);
+    }
+  }, [searchYear, metrics]);
 
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(metrics);
@@ -57,6 +69,17 @@ export default function FinanceDashboard() {
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-700">Finance Dashboard</h1>
 
       <div className="flex justify-center md:justify-end gap-4 mb-6 text-[7px] md:text-base">
+      <label htmlFor="searchYear" className="block text-sm font-medium text-gray-700 mb-1">
+          Search by Year
+        </label>
+        <input
+          id="searchYear"
+          type="number"
+          value={searchYear}
+          onChange={(e) => setSearchYear(e.target.value)}
+          placeholder="Enter Year"
+          className="border rounded-2xl p-2 w-full"
+        />
         <button
           onClick={exportToExcel}
           className="bg-green-900 hover:bg-green-800 text-white py-2 px-4 rounded-lg shadow"
@@ -71,7 +94,6 @@ export default function FinanceDashboard() {
              <FaFilePdf className="text-xs md:text-xl inline-block" />
           Export to PDF
         </button>
-      
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
@@ -79,28 +101,28 @@ export default function FinanceDashboard() {
           <FaDollarSign className="text-4xl mr-4" />
           <div>
             <h3 className="text-xl font-semibold">Total Revenue</h3>
-            <p className="text-3xl font-bold">{metrics.length > 0 ? formatNumber(metrics.reduce((sum, m) => sum + m.revenue, 0)) : '-'}</p>
+            <p className="text-3xl font-bold">{filteredMetrics.length > 0 ? formatNumber(filteredMetrics.reduce((sum, m) => sum + m.revenue, 0)) : '-'}</p>
           </div>
         </div>
         <div className="bg-gradient-to-r from-green-400 to-teal-500 text-white p-6 rounded-lg shadow-lg flex items-center">
           <FaPercent className="text-4xl mr-4" />
           <div>
             <h3 className="text-xl font-semibold">Gross Margin</h3>
-            <p className="text-3xl font-bold">{metrics.length > 0 ? formatNumber(metrics.reduce((sum, m) => sum + m.grossMargin, 0)) : '-'}</p>
+            <p className="text-3xl font-bold">{filteredMetrics.length > 0 ? formatNumber(filteredMetrics.reduce((sum, m) => sum + m.grossMargin, 0)) : '-'}</p>
           </div>
         </div>
         <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6 rounded-lg shadow-lg flex items-center">
           <FaChartBar className="text-4xl mr-4" />
           <div>
             <h3 className="text-xl font-semibold">Total Expenses</h3>
-            <p className="text-3xl font-bold">{metrics.length > 0 ? formatNumber(metrics.reduce((sum, m) => sum + m.expenses, 0)) : '-'}</p>
+            <p className="text-3xl font-bold">{filteredMetrics.length > 0 ? formatNumber(filteredMetrics.reduce((sum, m) => sum + m.expenses, 0)) : '-'}</p>
           </div>
         </div>
         <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white p-6 rounded-lg shadow-lg flex items-center">
           <FaChartPie className="text-4xl mr-4" />
           <div>
             <h3 className="text-xl font-semibold">Net Income</h3>
-            <p className="text-3xl font-bold">{metrics.length > 0 ? formatNumber(metrics.reduce((sum, m) => sum + m.netIncome, 0)) : '-'}</p>
+            <p className="text-3xl font-bold">{filteredMetrics.length > 0 ? formatNumber(filteredMetrics.reduce((sum, m) => sum + m.netIncome, 0)) : '-'}</p>
           </div>
         </div>
       </div>
@@ -109,7 +131,7 @@ export default function FinanceDashboard() {
         <div className="bg-white p-6 shadow-lg rounded-lg">
           <h2 className="text-lg font-semibold mb-4">Revenue vs Expenses</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={metrics}>
+            <BarChart data={filteredMetrics}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={formatNumber} />
@@ -124,8 +146,8 @@ export default function FinanceDashboard() {
           <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={metrics} dataKey="profit" nameKey="month" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label>
-                {metrics.map((entry, index) => (
+              <Pie data={filteredMetrics} dataKey="profit" nameKey="month" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label>
+                {filteredMetrics.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -139,7 +161,7 @@ export default function FinanceDashboard() {
         <div className="bg-white p-6 shadow-lg rounded-lg">
           <h2 className="text-lg font-semibold mb-4">Loss vs COGS</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={metrics}>
+            <LineChart data={filteredMetrics}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={formatNumber} />
@@ -153,7 +175,7 @@ export default function FinanceDashboard() {
         <div className="bg-white p-6 shadow-lg rounded-lg">
           <h2 className="text-lg font-semibold mb-4">CLV vs CAC</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <RadarChart data={metrics}>
+            <RadarChart data={filteredMetrics}>
               <PolarGrid />
               <PolarAngleAxis dataKey="month" />
               <PolarRadiusAxis tickFormatter={formatNumber} />
@@ -168,7 +190,7 @@ export default function FinanceDashboard() {
         <div className="bg-white p-6 shadow-lg rounded-lg">
           <h2 className="text-lg font-semibold mb-4">ROI Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={metrics}>
+            <LineChart data={filteredMetrics}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={formatNumber} />
@@ -181,7 +203,7 @@ export default function FinanceDashboard() {
         <div className="bg-white p-6 shadow-lg rounded-lg">
           <h2 className="text-lg font-semibold mb-4">Churn Rate Trends</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={metrics}>
+            <LineChart data={filteredMetrics}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={formatNumber} />
