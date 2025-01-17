@@ -24,7 +24,7 @@ const formatNumber = (value) => {
 };
 
 export default function FinanceDashboard() {
-   const currentYear = new Date().getFullYear().toString()
+  const currentYear = new Date().getFullYear().toString()
   const [metrics, setMetrics] = useState([]);
   const [searchYear, setSearchYear] = useState(currentYear);
   const [filteredMetrics, setFilteredMetrics] = useState([]);
@@ -79,7 +79,7 @@ export default function FinanceDashboard() {
           value={searchYear}
           onChange={(e) => setSearchYear(e.target.value)}
           placeholder="Enter Year"
-          className="border rounded-2xl p-2 w-full"
+          className="border rounded-2xl w-[60%]"
         />
         <button
           onClick={exportToExcel}
