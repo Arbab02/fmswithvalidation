@@ -38,7 +38,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="flex fixed z-10">
+    <div className="flex fixed z-20">
       <div
         ref={sidebarRef}
         className={`${
