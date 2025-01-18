@@ -1,18 +1,26 @@
-
-
-
 export default function Home() {
   return (
-    <>
-    <div className='h-[100vh] pt-32'>
-    <h1 className='text-indigo-700 mb-4 text-5xl sm:text-4xl md:text-5xl font-bold text-center'>Welcome To Our</h1>
-    <h1 className='text-indigo-700 mb-4 text-5xl sm:text-4xl md:text-5xl font-bold text-center'>Finance</h1>
-    <h1 className='text-indigo-700 mb-4 text-5xl sm:text-4xl md:text-5xl font-bold text-center'>Managament</h1>
-    <h1 className='text-indigo-700 mb-4 text-5xl sm:text-4xl md:text-5xl font-bold text-center'>System!</h1>
-    <h2 className='text-indigo-700 mb-4 text-3xl font-light text-center'>A modern solution for your finance management!</h2>
-    <h3 className='text-indigo-700 text-xl font-light text-center'>TechStack: Next. JS, TailwindCSS, Framer Motion, Recharts, MongoDB.</h3>
-    
+    <div className="h-screen flex flex-col justify-center items-center px-4 text-center bg-gray-50">
+      <div className="space-y-2">
+        <h1 className="text-indigo-700 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          Welcome To Our
+        </h1>
+        <h1 className="text-indigo-700 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          Finance
+        </h1>
+        <h1 className="text-indigo-700 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          Management
+        </h1>
+        <h1 className="text-indigo-700 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          System!
+        </h1>
+      </div>
+      <p className="text-indigo-600 mt-6 text-lg sm:text-xl md:text-2xl font-light max-w-2xl">
+        A modern solution for your finance management!
+      </p>
+      <p className="text-indigo-600 mt-4 text-base sm:text-lg md:text-xl font-light">
+        TechStack: Next.js, TailwindCSS, Framer Motion, Recharts, MongoDB.
+      </p>
     </div>
-    </>
   );
 }
