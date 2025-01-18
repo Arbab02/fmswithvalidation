@@ -69,33 +69,40 @@ export default function FinanceDashboard() {
     <div id="dashboard" className="min-h-screen bg-gray-200 pl-20 pr-4 w-[100%]  py-32">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-700">Finance Dashboard</h1>
 
-      <div className="flex justify-center md:justify-end gap-4 mb-6 text-[7px] md:text-base">
-      <label htmlFor="searchYear" className="block text-sm font-medium text-gray-700 mb-1">
-          Search by Year
-        </label>
-        <input
-          id="searchYear"
-          type="number"
-          value={searchYear}
-          onChange={(e) => setSearchYear(e.target.value)}
-          placeholder="Enter Year"
-          className="border rounded-2xl w-[60%]"
-        />
-        <button
-          onClick={exportToExcel}
-          className="bg-green-900 hover:bg-green-800 text-white py-2 px-4 rounded-lg shadow"
-        >
-            <FaFileExcel className="text-xs md:text-xl inline-block" />
-          Export to Excel
-        </button>
-        <button
-          onClick={exportToPDF}
-          className="bg-red-900 hover:bg-red-800 text-white py-2 px-4 rounded-lg shadow"
-        >
-             <FaFilePdf className="text-xs md:text-xl inline-block" />
-          Export to PDF
-        </button>
-      </div>
+    <div className="flex flex-wrap sticky top-0 z-10 bg-gray-200 justify-center md:justify-end items-center gap-4 p-4 md:p-6 mb-6 text-xs md:text-base">
+  <div className="flex flex-col  items-center md:items-end">
+    <label
+      htmlFor="searchYear"
+      className="block text-sm font-medium text-gray-700 mb-2"
+    >
+      Search by Year
+    </label>
+    <input
+      id="searchYear"
+      type="number"
+      value={searchYear}
+      onChange={(e) => setSearchYear(e.target.value)}
+      placeholder="Enter Year"
+      className="border rounded-2xl w-full md:w-[200px] px-3 py-2 text-gray-700 focus:ring-2 focus:ring-green-500"
+    />
+  </div>
+  <button
+    onClick={exportToExcel}
+    className="flex items-center bg-green-900 hover:bg-green-800 text-white py-2 px-4 rounded-lg shadow transition-all duration-200 ease-in-out"
+  >
+    <FaFileExcel className="text-lg md:text-xl mr-2" />
+    Export to Excel
+  </button>
+  <button
+    onClick={exportToPDF}
+    className="flex items-center bg-red-900 hover:bg-red-800 text-white py-2 px-4 rounded-lg shadow transition-all duration-200 ease-in-out"
+  >
+    <FaFilePdf className="text-lg md:text-xl mr-2" />
+    Export to PDF
+  </button>
+</div>
+
+
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-6 rounded-lg shadow-lg flex items-center">
